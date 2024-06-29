@@ -1,0 +1,10 @@
+CREATE TABLE animais (
+  id SERIAL PRIMARY KEY,
+  nome VARCHAR(255) NOT NULL,
+  especie VARCHAR(255) NOT NULL,
+  sexo VARCHAR(255) NOT NULL, 
+  raca VARCHAR(255) NOT NULL, 
+  cor VARCHAR(255) NOT NULL, 
+  nascimento VARCHAR(255) NOT NULL,
+  microchip VARCHAR(255) NOT NULL
+)

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inserir Animal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilo.css') }}">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Inserir Animais</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link active" aria-current="page" href="/">Home</a>
+
+                    <a class="nav-link" href="/listar">Listar Animais</a>
+
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="img-container">
+        <img class="imgLogo" src="{{ url_for('static', filename='Esquerda.png') }}" class="left-img">
+        <div class="center-wrapper">
+            <img class="imgLogo" src="{{ url_for('static', filename='Capa.png') }}" class="center-img">
+        </div>
+        <img class="imgLogo" src="{{ url_for('static', filename='Direita.png') }}" class="right-img">
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+        
+        <div class="container-fluid">
+            <form id="animalForm" action="/inserir" method="POST" onsubmit="return validateForm()">
+                <br>
+                <label for="nome" class="form-label">Nome:</label><br>
+                <input type="text" id="nome" name="nome" class="form-control" placeholder="Insira o nome do animal"
+                    style="width: 635px;">
+                <div id="nomeError" class="error-message"></div><br>
+    
+                <label class="form-label">Espécie:</label><br>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="especie" id="canino" value="Canino">
+                    <label class="form-check-label" for="canino">Canino</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="especie" id="felino" value="Felino">
+                    <label class="form-check-label" for="felino">Felino</label>
+                </div>
+                <div id="especieError" class="error-message"></div>
+                <br>
+    
+                <label class="form-label">Sexo:</label><br>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="sexo" id="femea" value="Fêmea">
+                    <label class="form-check-label" for="femea">Fêmea</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="sexo" id="macho" value="Macho">
+                    <label class="form-check-label" for="macho">Macho</label>
+                </div>
+                <div id="sexoError" class="error-message"></div>
+                <br>
+    
+                <div class="form-container">
+                    <div class="form-group">
+                        <label for="raca" class="form-label">Raça:</label>
+                        <input type="text" id="raca" name="raca" class="form-control" placeholder="Insira a raça do animal">
+                        <div id="racaError" class="error-message"></div>
+                    </div>
+    
+                    <div class="form-group">
+                        <label for="cor" class="form-label">Cor:</label>
+                        <input type="text" id="cor" name="cor" class="form-control" placeholder="Insira a cor do animal">
+                        <div id="corError" class="error-message"></div>
+                    </div>
+    
+                    <div class="form-group">
+                        <label for="nascimento" class="form-label">Data de Nascimento:</label>
+                        <input type="date" id="nascimento" name="nascimento" class="form-control"
+                            placeholder="Insira a data de nascimento do animal">
+                        <div id="nascimentoError" class="error-message"></div>
+                    </div>
+    
+                    <div class="form-group">
+                        <label for="microchip" class="form-label">Número de Microchip:</label>
+                        <input type="number" id="microchip" name="microchip" class="form-control"
+                            placeholder="Insira o número de microchip">
+                        <div id="microchipError" class="error-message"></div>
+                    </div>
+                </div>
+    
+                <br>
+                <input type="submit" value="Inserir" class="btn btn-primary">
+            </form>
+        </div>
+
+
+        <script>
+            function validateForm() {
+                var nomeInput = document.getElementById('nome');
+                var racaInput = document.getElementById('raca');
+                var corInput = document.getElementById('cor');
+                var nascimentoInput = document.getElementById('nascimento');
+                var microchipInput = document.getElementById('microchip');
+                var especieInputs = document.querySelectorAll('input[name="especie"]');
+                var sexoInputs = document.querySelectorAll('input[name="sexo"]');
+                var nomeError = document.getElementById('nomeError');
+                var racaError = document.getElementById('racaError');
+                var corError = document.getElementById('corError');
+                var nascimentoError = document.getElementById('nascimentoError');
+                var microchipError = document.getElementById('microchipError');
+                var especieError = document.getElementById('especieError');
+                var sexoError = document.getElementById('sexoError');
+                var formIsValid = true;
+    
+                // Validar Nome
+                if (nomeInput.value.trim() === '') {
+                    nomeInput.classList.add('error');
+                    nomeError.textContent = 'Por favor, insira o nome do animal.';
+                    formIsValid = false;
+                } else {
+                    nomeInput.classList.remove('error');
+                    nomeError.textContent = '';
+                }
+    
+                // Validar Raça
+                if (racaInput.value.trim() === '') {
+                    racaInput.classList.add('error');
+                    racaError.textContent = 'Por favor, insira a raça do animal.';
+                    formIsValid = false;
+                } else {
+                    racaInput.classList.remove('error');
+                    racaError.textContent = '';
+                }
+    
+                // Validar Cor
+                if (corInput.value.trim() === '') {
+                    corInput.classList.add('error');
+                    corError.textContent = 'Por favor, insira a cor do animal.';
+                    formIsValid = false;
+                } else {
+                    corInput.classList.remove('error');
+                    corError.textContent = '';
+                }
+    
+                // Validar Data de Nascimento
+                if (nascimentoInput.value.trim() === '') {
+                    nascimentoInput.classList.add('error');
+                    nascimentoError.textContent = 'Por favor, insira a data de nascimento do animal.';
+                    formIsValid = false;
+                } else {
+                    nascimentoInput.classList.remove('error');
+                    nascimentoError.textContent = '';
+                }
+    
+                // Validar Número de Microchip
+                if (microchipInput.value.trim() === '') {
+                    microchipInput.classList.add('error');
+                    microchipError.textContent = 'Por favor, insira o número de microchip do animal.';
+                    formIsValid = false;
+                } else {
+                    microchipInput.classList.remove('error');
+                    microchipError.textContent = '';
+                }
+    
+                // Validar Espécie (pelo menos uma deve ser selecionada)
+                var especieSelected = false;
+                especieInputs.forEach(function(input) {
+                    if (input.checked) {
+                        especieSelected = true;
+                    }
+                });
+                if (!especieSelected) {
+                    especieError.textContent = 'Por favor, selecione a espécie do animal.';
+                    formIsValid = false;
+                } else {
+                    especieError.textContent = '';
+                }
+    
+                // Validar Sexo (pelo menos um deve ser selecionado)
+                var sexoSelected = false;
+                sexoInputs.forEach(function(input) {
+                    if (input.checked) {
+                        sexoSelected = true;
+                    }
+                });
+                if (!sexoSelected) {
+                    sexoError.textContent = 'Por favor, selecione o sexo do animal.';
+                    formIsValid = false;
+                } else {
+                    sexoError.textContent = '';
+                }
+    
+                return formIsValid;
+            }
+        </script>
+
+</body>
+
+</html>
